@@ -37,6 +37,7 @@
       position: sticky;
       top: 0;
       z-index: 50;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       background: rgba(26,10,10,.9);
       border-bottom: 1px solid var(--border);
@@ -166,6 +167,26 @@
       color: var(--muted);
     }
     .kv b { color: var(--text); font-weight: 700; }
+
+    /* Utility classes */
+    .panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px; }
+    .panel-title { margin: 6px 0; font-size: 15px; }
+    .panel-desc { font-size: 13px; }
+    .section-title { margin: 10px 0 0; font-size: 18px; }
+    .hero-tests-card { position: relative; padding-bottom: 50px; }
+    .hero-tests-badges { position: absolute; bottom: 16px; left: 16px; right: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .sidebar-note { font-size: 13px; }
+    .section-card { margin-top: 16px; }
+    .form-row-mt { margin-top: 12px; }
+    .form-actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .mono-time { font-family: var(--mono); }
+    .footer-flex { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .modal-title { font-weight: 800; }
+    .modal-intro { margin-top: 0; }
+    .color-danger { color: var(--danger); }
+    .color-good { color: var(--good); }
+    .color-accent { color: var(--accent); }
+    .color-muted { color: var(--muted); }
 
     /* Mini panels for 2x2 grid */
     .mini-panel {
@@ -326,11 +347,11 @@
 
   <section id="overview" class="hero" data-testid="hero">
         <!-- LEFT SIDE: 4 panels in a 2x2 grid -->
-    <div class="card" data-testid="hero-left" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:16px;">
+    <div class="card panel-grid" data-testid="hero-left">
       <div class="mini-panel" data-testid="panel-overview">
         <div class="kicker">Overview</div>
-        <h3 style="margin:6px 0; font-size:15px;">System Status</h3>
-        <p class="muted" style="font-size:13px;">All systems operational</p>
+        <h3 class="panel-title">System Status</h3>
+        <p class="muted panel-desc">All systems operational</p>
         <div class="kv-mini">
           <span>Uptime</span><b>99.9%</b>
           <span>Latency</span><b>42ms</b>
@@ -338,48 +359,48 @@
       </div>
       <div class="mini-panel" data-testid="panel-metrics">
         <div class="kicker">Metrics</div>
-        <h3 style="margin:6px 0; font-size:15px;">Performance</h3>
-        <p class="muted" style="font-size:13px;">Last 24 hours</p>
+        <h3 class="panel-title">Performance</h3>
+        <p class="muted panel-desc">Last 24 hours</p>
         <div class="kv-mini">
           <span>Requests</span><b>12.4K</b>
-          <span>Errors</span><b style="color:var(--danger)">23</b>
+          <span>Errors</span><b class="color-danger">23</b>
         </div>
       </div>
       <div class="mini-panel" data-testid="panel-users">
         <div class="kicker">Users</div>
-        <h3 style="margin:6px 0; font-size:15px;">Active Sessions</h3>
-        <p class="muted" style="font-size:13px;">Real-time data</p>
+        <h3 class="panel-title">Active Sessions</h3>
+        <p class="muted panel-desc">Real-time data</p>
         <div class="kv-mini">
-          <span>Online</span><b style="color:var(--good)">847</b>
+          <span>Online</span><b class="color-good">847</b>
           <span>Peak</span><b>1,203</b>
         </div>
       </div>
       <div class="mini-panel" data-testid="panel-alerts">
         <div class="kicker">Alerts</div>
-        <h3 style="margin:6px 0; font-size:15px;">Notifications</h3>
-        <p class="muted" style="font-size:13px;">Pending items</p>
+        <h3 class="panel-title">Notifications</h3>
+        <p class="muted panel-desc">Pending items</p>
         <div class="kv-mini">
-          <span>Critical</span><b style="color:var(--danger)">2</b>
-          <span>Warning</span><b style="color:var(--accent)">5</b>
+          <span>Critical</span><b class="color-danger">2</b>
+          <span>Warning</span><b class="color-accent">5</b>
         </div>
       </div>
     </div>
 
     <!-- RIGHT SIDE: 4 panels in a 2x2 grid -->
-    <div class="card" data-testid="hero-right" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:16px;">
+    <div class="card panel-grid" data-testid="hero-right">
       <div class="mini-panel" data-testid="panel-storage">
         <div class="kicker">Storage</div>
-        <h3 style="margin:6px 0; font-size:15px;">Disk Usage</h3>
-        <p class="muted" style="font-size:13px;">Primary volume</p>
+        <h3 class="panel-title">Disk Usage</h3>
+        <p class="muted panel-desc">Primary volume</p>
         <div class="kv-mini">
           <span>Used</span><b>234 GB</b>
-          <span>Free</span><b style="color:var(--good)">766 GB</b>
+          <span>Free</span><b class="color-good">766 GB</b>
         </div>
       </div>
       <div class="mini-panel" data-testid="panel-memory">
         <div class="kicker">Memory</div>
-        <h3 style="margin:6px 0; font-size:15px;">RAM Usage</h3>
-        <p class="muted" style="font-size:13px;">Current allocation</p>
+        <h3 class="panel-title">RAM Usage</h3>
+        <p class="muted panel-desc">Current allocation</p>
         <div class="kv-mini">
           <span>Used</span><b>12.8 GB</b>
           <span>Total</span><b>32 GB</b>
@@ -387,8 +408,8 @@
       </div>
       <div class="mini-panel" data-testid="panel-cpu">
         <div class="kicker">CPU</div>
-        <h3 style="margin:6px 0; font-size:15px;">Processing</h3>
-        <p class="muted" style="font-size:13px;">8 cores active</p>
+        <h3 class="panel-title">Processing</h3>
+        <p class="muted panel-desc">8 cores active</p>
         <div class="kv-mini">
           <span>Load</span><b>47%</b>
           <span>Temp</span><b>62°C</b>
@@ -396,29 +417,29 @@
       </div>
       <div class="mini-panel" data-testid="panel-network">
         <div class="kicker">Network</div>
-        <h3 style="margin:6px 0; font-size:15px;">Bandwidth</h3>
-        <p class="muted" style="font-size:13px;">Current throughput</p>
+        <h3 class="panel-title">Bandwidth</h3>
+        <p class="muted panel-desc">Current throughput</p>
         <div class="kv-mini">
-          <span>In</span><b style="color:var(--good)">125 Mbps</b>
+          <span>In</span><b class="color-good">125 Mbps</b>
           <span>Out</span><b>89 Mbps</b>
         </div>
       </div>
     </div>
 
-    <div class="card" data-testid="hero-tests" style="position:relative; padding-bottom:50px;">
+    <div class="card hero-tests-card" data-testid="hero-tests">
       <div class="hd">
         <div class="kicker">Test Results</div>
-        <h2 style="margin:10px 0 0; font-size:18px;">Latest Run</h2>
+        <h2 class="section-title">Latest Run</h2>
       </div>
       <div class="bd">
         <div class="kv" data-testid="test-results">
           <span>Total Tests</span><b>47</b>
-          <span>Passed</span><b style="color: var(--good)">42</b>
-          <span>Failed</span><b style="color: var(--danger)">3</b>
-          <span>Skipped</span><b style="color: var(--muted)">2</b>
+          <span>Passed</span><b class="color-good">42</b>
+          <span>Failed</span><b class="color-danger">3</b>
+          <span>Skipped</span><b class="color-muted">2</b>
         </div>
       </div>
-      <div style="position:absolute; bottom:16px; left:16px; right:16px; display:flex; gap:10px; flex-wrap:wrap;">
+      <div class="hero-tests-badges">
         <span class="badge"><span class="dot good"></span> 89% Pass</span>
         <span class="badge"><span class="dot bad"></span> 3 Issues</span>
       </div>
@@ -429,7 +450,7 @@
     <div class="card" data-testid="cards-panel">
       <div class="hd">
         <div class="kicker">Cards</div>
-        <h2 style="margin:10px 0 0; font-size:18px;">Three card layout</h2>
+        <h2 class="section-title">Three card layout</h2>
       </div>
       <div class="bd">
         <div class="cards" data-testid="cards">
@@ -455,23 +476,23 @@
     <aside role="complementary" class="card" data-testid="sidebar">
       <div class="hd">
         <div class="kicker">Sidebar</div>
-        <h2 style="margin:10px 0 0; font-size:18px;">Quick Actions</h2>
+        <h2 class="section-title">Quick Actions</h2>
       </div>
       <div class="bd">
         <button class="btn primary" type="button" data-testid="sidebar-run">Run Check</button>
         <button class="btn" type="button" data-testid="sidebar-refresh">Refresh</button>
         <button class="btn danger" type="button" data-testid="sidebar-delete">Delete Something</button>
-        <div class="muted" style="font-size:13px;">
+        <div class="muted sidebar-note">
           Sidebar simulates a right-rail action list.
         </div>
       </div>
     </aside>
   </section>
 
-  <section id="form" class="card" style="margin-top:16px;" data-testid="form-section" aria-label="Contact Form Section">
+  <section id="form" class="card section-card" data-testid="form-section" aria-label="Contact Form Section">
     <div class="hd">
       <div class="kicker">Form</div>
-      <h2 style="margin:10px 0 0; font-size:18px;">Contact / Inputs</h2>
+      <h2 class="section-title">Contact / Inputs</h2>
     </div>
     <div class="bd">
       <form data-testid="form" aria-label="Contact Form">
@@ -486,7 +507,7 @@
           </div>
         </div>
 
-        <div class="row" style="margin-top:12px;">
+        <div class="row form-row-mt">
           <div>
             <label for="topic">Topic</label>
             <select id="topic" name="topic" data-testid="field-topic" aria-label="Topic dropdown">
@@ -505,12 +526,12 @@
           </div>
         </div>
 
-        <div style="margin-top:12px;">
+        <div class="form-row-mt">
           <label for="message">Message</label>
           <textarea id="message" name="message" placeholder="Describe what you want the agent to do…" data-testid="field-message"></textarea>
         </div>
 
-        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+        <div class="form-actions">
           <button class="btn primary" type="submit" data-testid="form-submit">Submit</button>
           <button class="btn" type="reset" data-testid="form-reset">Reset</button>
         </div>
@@ -518,10 +539,10 @@
     </div>
   </section>
 
-  <section id="table" class="card" style="margin-top:16px;" data-testid="table-section">
+  <section id="table" class="card section-card" data-testid="table-section">
     <div class="hd">
       <div class="kicker">Table</div>
-      <h2 style="margin:10px 0 0; font-size:18px;">Recent Events</h2>
+      <h2 class="section-title">Recent Events</h2>
     </div>
     <div class="bd">
       <table class="table" data-testid="events-table" aria-label="Events Table">
@@ -535,19 +556,19 @@
         </thead>
         <tbody>
           <tr>
-            <td><span style="font-family:var(--mono)">10:14</span></td>
+            <td><span class="mono-time">10:14</span></td>
             <td>Loaded page</td>
             <td><span class="badge"><span class="dot good"></span> OK</span></td>
             <td>system</td>
           </tr>
           <tr>
-            <td><span style="font-family:var(--mono)">10:18</span></td>
+            <td><span class="mono-time">10:18</span></td>
             <td>Opened modal</td>
             <td><span class="badge"><span class="dot"></span> INFO</span></td>
             <td>user</td>
           </tr>
           <tr>
-            <td><span style="font-family:var(--mono)">10:22</span></td>
+            <td><span class="mono-time">10:22</span></td>
             <td>Submitted form</td>
             <td><span class="badge"><span class="dot bad"></span> FAIL</span></td>
             <td>user</td>
@@ -560,9 +581,9 @@
 </main>
 
 <footer role="contentinfo" class="wrap" data-testid="footer">
-  <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+  <div class="footer-flex">
     <div>Agent Test Page — built for layout + interaction snapshots.</div>
-    <div style="font-family:var(--mono)">v0.1 • local</div>
+    <div class="mono-time">v0.1 • local</div>
   </div>
 </footer>
 
@@ -574,11 +595,11 @@
 <div class="backdrop" role="dialog" aria-modal="true" aria-label="Help Modal" data-testid="modal-backdrop">
   <div class="modal" data-testid="modal">
     <div class="mh">
-      <div style="font-weight:800;">Help Modal</div>
+      <div class="modal-title">Help Modal</div>
       <button class="btn" type="button" data-testid="btn-close-modal" aria-label="Close modal">Close</button>
     </div>
     <div class="mb">
-      <p class="muted" style="margin-top:0;">
+      <p class="muted modal-intro">
         This modal intentionally covers the main content. Your agent should detect an overlay and prefer interacting inside it.
       </p>
       <div class="row">
@@ -595,7 +616,7 @@
           </select>
         </div>
       </div>
-      <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+      <div class="form-actions">
         <button class="btn primary" type="button" data-testid="modal-confirm">Confirm</button>
         <button class="btn danger" type="button" data-testid="modal-cancel">Cancel</button>
       </div>
