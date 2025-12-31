@@ -113,7 +113,7 @@
     main[role="main"] { padding: 18px 0 40px; }
     .hero {
       display: grid;
-      grid-template-columns: 1fr .7fr .7fr;
+      grid-template-columns: 1fr 1fr 320px;
       gap: 16px;
       align-items: stretch;
       margin-top: 14px;
@@ -295,6 +295,246 @@
       border-top: 1px solid var(--border);
       color: var(--muted);
       padding: 18px 0;
+    }
+
+    /* Interactive elements styles */
+    .checkbox-group, .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .checkbox-group label, .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .checkbox-group input, .radio-group input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+    }
+    .toggle-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .toggle-label:last-child { border-bottom: none; }
+    .toggle-switch {
+      width: 44px;
+      height: 24px;
+      background: var(--border);
+      border-radius: 12px;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.2s;
+    }
+    input:checked + .toggle-switch {
+      background: var(--accent);
+    }
+    input:checked + .toggle-switch::after {
+      transform: translateX(20px);
+    }
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .interactive-group {
+      background: var(--panel2);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .interactive-group h4 {
+      margin: 0 0 12px 0;
+      font-size: 14px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .counter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .counter button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .counter button:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .counter span {
+      font-size: 24px;
+      font-weight: 700;
+      min-width: 40px;
+      text-align: center;
+    }
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--panel2);
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+    .tab {
+      flex: 1;
+      padding: 8px 12px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .tab.active, .tab:hover {
+      background: var(--accent);
+      color: white;
+    }
+    .tab-content {
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 8px;
+      min-height: 60px;
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .accordion-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+    .accordion-header {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--panel);
+      border: none;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .accordion-header::after {
+      content: '▼';
+      font-size: 10px;
+      transition: transform 0.2s;
+    }
+    .accordion-item.open .accordion-header::after {
+      transform: rotate(180deg);
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: var(--panel2);
+    }
+    .accordion-item.open .accordion-content {
+      max-height: 200px;
+    }
+    .accordion-content p {
+      padding: 12px 16px;
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .hover-card {
+      padding: 16px;
+      background: var(--panel);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .hover-tooltip {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 12px;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 6px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s;
+    }
+    .hover-card:hover .hover-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    .hover-btn {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hover-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+    .status-display {
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    input[type="range"] {
+      padding: 0;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--border);
+      border-radius: 3px;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    input[type="color"] {
+      padding: 4px;
+      height: 44px;
+      cursor: pointer;
     }
 
     @media (max-width: 980px) {
@@ -509,11 +749,25 @@
 
         <div class="row form-row-mt">
           <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" placeholder="+1 (555) 123-4567" data-testid="field-phone" />
+          </div>
+          <div>
+            <label for="website">Website</label>
+            <input id="website" name="website" type="url" placeholder="https://example.com" data-testid="field-website" />
+          </div>
+        </div>
+
+        <div class="row form-row-mt">
+          <div>
             <label for="topic">Topic</label>
             <select id="topic" name="topic" data-testid="field-topic" aria-label="Topic dropdown">
+              <option value="">-- Select topic --</option>
               <option value="ux">UX / Layout</option>
               <option value="automation">Automation</option>
               <option value="performance">Performance</option>
+              <option value="security">Security</option>
+              <option value="other">Other</option>
             </select>
           </div>
           <div>
@@ -522,7 +776,56 @@
               <option value="low">Low</option>
               <option value="med" selected>Medium</option>
               <option value="high">High</option>
+              <option value="critical">Critical</option>
             </select>
+          </div>
+        </div>
+
+        <div class="row form-row-mt">
+          <div>
+            <label for="country">Country</label>
+            <select id="country" name="country" data-testid="field-country">
+              <option value="">-- Select country --</option>
+              <option value="us">United States</option>
+              <option value="uk">United Kingdom</option>
+              <option value="ca">Canada</option>
+              <option value="au">Australia</option>
+              <option value="de">Germany</option>
+              <option value="fr">France</option>
+              <option value="jp">Japan</option>
+            </select>
+          </div>
+          <div>
+            <label for="timezone">Timezone</label>
+            <select id="timezone" name="timezone" data-testid="field-timezone">
+              <option value="utc">UTC</option>
+              <option value="est">Eastern (EST)</option>
+              <option value="cst">Central (CST)</option>
+              <option value="mst">Mountain (MST)</option>
+              <option value="pst">Pacific (PST)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row form-row-mt">
+          <div>
+            <label for="date">Date</label>
+            <input id="date" name="date" type="date" data-testid="field-date" />
+          </div>
+          <div>
+            <label for="time">Time</label>
+            <input id="time" name="time" type="time" data-testid="field-time" />
+          </div>
+        </div>
+
+        <div class="row form-row-mt">
+          <div>
+            <label for="quantity">Quantity (1-100)</label>
+            <input id="quantity" name="quantity" type="number" min="1" max="100" value="1" data-testid="field-quantity" />
+          </div>
+          <div>
+            <label for="budget">Budget Range</label>
+            <input id="budget" name="budget" type="range" min="0" max="10000" step="500" value="5000" data-testid="field-budget" />
           </div>
         </div>
 
@@ -531,11 +834,179 @@
           <textarea id="message" name="message" placeholder="Describe what you want the agent to do…" data-testid="field-message"></textarea>
         </div>
 
+        <div class="form-row-mt">
+          <label>Preferences</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="notifications" value="email" data-testid="check-email-notifications" />
+              Email notifications
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="notifications" value="sms" data-testid="check-sms-notifications" />
+              SMS notifications
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="notifications" value="push" checked data-testid="check-push-notifications" />
+              Push notifications
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="newsletter" value="yes" data-testid="check-newsletter" />
+              Subscribe to newsletter
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row-mt">
+          <label>Contact Method</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="contact-method" value="email" checked data-testid="radio-contact-email" />
+              Email
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="contact-method" value="phone" data-testid="radio-contact-phone" />
+              Phone
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="contact-method" value="chat" data-testid="radio-contact-chat" />
+              Live Chat
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row-mt">
+          <label for="color">Favorite Color</label>
+          <input id="color" name="color" type="color" value="#ef5555" data-testid="field-color" />
+        </div>
+
+        <div class="form-row-mt">
+          <label for="file">Upload File</label>
+          <input id="file" name="file" type="file" accept=".pdf,.doc,.docx,.txt" data-testid="field-file" />
+        </div>
+
+        <div class="form-row-mt">
+          <label for="search-field">Search</label>
+          <input id="search-field" name="search" type="search" placeholder="Search for anything..." data-testid="field-search" />
+        </div>
+
+        <div class="form-row-mt">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="Enter password" data-testid="field-password" />
+        </div>
+
         <div class="form-actions">
           <button class="btn primary" type="submit" data-testid="form-submit">Submit</button>
           <button class="btn" type="reset" data-testid="form-reset">Reset</button>
+          <button class="btn" type="button" data-testid="form-save-draft">Save Draft</button>
+          <button class="btn danger" type="button" data-testid="form-clear-all">Clear All</button>
         </div>
       </form>
+    </div>
+  </section>
+
+  <!-- NEW: Interactive Elements Test Section -->
+  <section id="interactive" class="card section-card" data-testid="interactive-section" aria-label="Interactive Elements">
+    <div class="hd">
+      <div class="kicker">Interactions</div>
+      <h2 class="section-title">Test Interactions</h2>
+    </div>
+    <div class="bd">
+      <div class="interactive-grid">
+        <!-- Toggles -->
+        <div class="interactive-group">
+          <h4>Toggles</h4>
+          <label class="toggle-label">
+            <input type="checkbox" role="switch" data-testid="toggle-dark-mode" />
+            <span class="toggle-switch"></span>
+            Dark Mode
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" role="switch" checked data-testid="toggle-notifications" />
+            <span class="toggle-switch"></span>
+            Notifications
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" role="switch" data-testid="toggle-auto-save" />
+            <span class="toggle-switch"></span>
+            Auto-save
+          </label>
+        </div>
+
+        <!-- Buttons -->
+        <div class="interactive-group">
+          <h4>Buttons</h4>
+          <button class="btn" type="button" data-testid="btn-primary-action">Primary Action</button>
+          <button class="btn primary" type="button" data-testid="btn-save">Save Changes</button>
+          <button class="btn danger" type="button" data-testid="btn-delete">Delete Item</button>
+          <button class="btn" type="button" disabled data-testid="btn-disabled">Disabled</button>
+        </div>
+
+        <!-- Counter -->
+        <div class="interactive-group">
+          <h4>Counter</h4>
+          <div class="counter">
+            <button class="btn" type="button" data-testid="counter-decrement">−</button>
+            <span class="counter-value" data-testid="counter-value">0</span>
+            <button class="btn" type="button" data-testid="counter-increment">+</button>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="interactive-group">
+          <h4>Tabs</h4>
+          <div class="tabs" role="tablist">
+            <button class="tab active" role="tab" data-tab="overview" data-testid="tab-overview" aria-selected="true">Overview</button>
+            <button class="tab" role="tab" data-tab="details" data-testid="tab-details" aria-selected="false">Details</button>
+            <button class="tab" role="tab" data-tab="history" data-testid="tab-history" aria-selected="false">History</button>
+          </div>
+          <div class="tab-content">
+            <div class="tab-panel active" data-panel="overview">Overview content: Welcome to WebSight!</div>
+            <div class="tab-panel" data-panel="details">Details content: Technical specifications here.</div>
+            <div class="tab-panel" data-panel="history">History content: Version changelog.</div>
+          </div>
+        </div>
+
+        <!-- Accordion -->
+        <div class="interactive-group">
+          <h4>Accordion</h4>
+          <div class="accordion-item" data-testid="accordion-item-1">
+            <button class="accordion-header" type="button" data-testid="accordion-1" aria-expanded="false">
+              Section 1: Getting Started
+            </button>
+            <div class="accordion-content"><p>Learn how to get started with WebSight.</p></div>
+          </div>
+          <div class="accordion-item" data-testid="accordion-item-2">
+            <button class="accordion-header" type="button" data-testid="accordion-2" aria-expanded="false">
+              Section 2: Configuration
+            </button>
+            <div class="accordion-content"><p>Configure settings and preferences.</p></div>
+          </div>
+          <div class="accordion-item" data-testid="accordion-item-3">
+            <button class="accordion-header" type="button" data-testid="accordion-3" aria-expanded="false">
+              Section 3: Advanced Usage
+            </button>
+            <div class="accordion-content"><p>Advanced features and tips.</p></div>
+          </div>
+        </div>
+
+        <!-- Hover Card -->
+        <div class="interactive-group">
+          <h4>Hover Effects</h4>
+          <div class="hover-card" data-testid="hover-card">
+            Hover over me!
+            <div class="hover-tooltip">This tooltip appears on hover</div>
+          </div>
+          <button class="btn hover-btn" type="button" data-testid="hover-button">
+            Hover Button
+          </button>
+        </div>
+      </div>
+
+      <!-- Status Display -->
+      <div class="status-display form-row-mt">
+        <span class="muted">Last action: </span>
+        <span data-testid="last-action">None</span>
+      </div>
     </div>
   </section>
 
@@ -630,21 +1101,31 @@
   const closeModalBtn = document.querySelector('[data-testid="btn-close-modal"]');
   const backdrop = document.querySelector('[data-testid="modal-backdrop"]');
   const toastBtn = document.querySelector('[data-testid="btn-toast"]');
+  const lastActionEl = document.querySelector('[data-testid="last-action"]');
+
+  function updateStatus(action) {
+    if (lastActionEl) {
+      lastActionEl.textContent = action + ' at ' + new Date().toLocaleTimeString();
+    }
+  }
 
   function showToast() {
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2200);
+    updateStatus('Showed toast');
   }
 
   function openModal() {
     backdrop.classList.add('show');
     const input = document.querySelector('[data-testid="modal-search"]');
     if (input) input.focus();
+    updateStatus('Opened modal');
   }
 
   function closeModal() {
     backdrop.classList.remove('show');
     openModalBtn.focus();
+    updateStatus('Closed modal');
   }
 
   toastBtn.addEventListener('click', showToast);
@@ -657,7 +1138,98 @@
   document.querySelector('[data-testid="form"]')?.addEventListener('submit', (e) => {
     e.preventDefault();
     showToast();
+    updateStatus('Submitted form');
   });
+
+  // Counter functionality
+  const counterValue = document.querySelector('[data-testid="counter-value"]');
+  const decrementBtn = document.querySelector('[data-testid="counter-decrement"]');
+  const incrementBtn = document.querySelector('[data-testid="counter-increment"]');
+  
+  if (counterValue && decrementBtn && incrementBtn) {
+    decrementBtn.addEventListener('click', () => {
+      counterValue.textContent = parseInt(counterValue.textContent) - 1;
+      updateStatus('Decremented counter to ' + counterValue.textContent);
+    });
+    incrementBtn.addEventListener('click', () => {
+      counterValue.textContent = parseInt(counterValue.textContent) + 1;
+      updateStatus('Incremented counter to ' + counterValue.textContent);
+    });
+  }
+
+  // Tabs functionality
+  const tabs = document.querySelectorAll('.tab');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      
+      tabs.forEach(t => t.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+      
+      tab.classList.add('active');
+      document.querySelector(`[data-panel="${target}"]`)?.classList.add('active');
+      updateStatus('Switched to tab: ' + target);
+    });
+  });
+
+  // Accordion functionality
+  document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const item = header.parentElement;
+      const wasOpen = item.classList.contains('open');
+      
+      // Close all others
+      document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+      
+      // Toggle current
+      if (!wasOpen) {
+        item.classList.add('open');
+        updateStatus('Opened accordion: ' + header.textContent.trim());
+      } else {
+        updateStatus('Closed accordion');
+      }
+    });
+  });
+
+  // Track all button clicks
+  document.querySelectorAll('button').forEach(btn => {
+    if (!btn.closest('.counter') && !btn.classList.contains('tab') && !btn.classList.contains('accordion-header')) {
+      btn.addEventListener('click', () => {
+        const label = btn.getAttribute('data-testid') || btn.textContent.trim();
+        if (label !== 'btn-open-modal' && label !== 'btn-close-modal' && label !== 'btn-toast') {
+          updateStatus('Clicked: ' + label);
+        }
+      });
+    }
+  });
+
+  // Track toggle changes
+  document.querySelectorAll('[role="switch"]').forEach(toggle => {
+    toggle.addEventListener('change', () => {
+      const label = toggle.getAttribute('data-testid') || 'toggle';
+      updateStatus(label + ' ' + (toggle.checked ? 'ON' : 'OFF'));
+    });
+  });
+
+  // Track input changes
+  document.querySelectorAll('input, select, textarea').forEach(input => {
+    if (input.type !== 'checkbox' && input.type !== 'radio') {
+      input.addEventListener('change', () => {
+        const label = input.getAttribute('data-testid') || input.name || 'input';
+        updateStatus('Changed: ' + label);
+      });
+    }
+  });
+
+  // Range slider live update
+  const rangeInput = document.querySelector('[data-testid="field-quantity"]');
+  if (rangeInput) {
+    rangeInput.addEventListener('input', () => {
+      updateStatus('Range: ' + rangeInput.value);
+    });
+  }
 </script>
 
 </body>

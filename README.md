@@ -43,8 +43,10 @@ AI coding assistants are incredibly powerful at writing and modifying code—but
 | 🏗️ **Layout Analysis** | Identifies landmarks (header, nav, main, footer) and content sections |
 | 🖱️ **Action Detection** | Finds all interactive elements with their selectors and test IDs |
 | 📊 **Visual Diffing** | Pixel-by-pixel comparison with configurable threshold |
+| 🖱️ **Page Interactions** | Click, type, select, hover, scroll — all from AI commands |
+| ⚡ **10x Faster** | Persistent browser session eliminates cold-start overhead |
 | 🤖 **MCP Integration** | Works seamlessly with Claude Desktop, Cursor, and VS Code Copilot |
-| ⚡ **Auto-Detection** | Automatically finds running dev servers (Vite, Next.js, etc.) |
+| 🔍 **Auto-Detection** | Automatically finds running dev servers (Vite, Next.js, etc.) |
 
 ---
 
@@ -140,21 +142,41 @@ npm run diff        # Compare current state with baseline
 
 ## 📚 API Reference
 
-### MCP Tools
+### MCP Tool Actions
 
-| Tool | Parameters | Description |
-|------|------------|-------------|
-| `websight_look` | `url?` | Analyze page structure, CSS variables, theme, and interactive elements |
-| `websight_baseline` | `url?` | Capture and save visual snapshot for later comparison |
-| `websight_diff` | `url?` | Compare current state against saved baseline, returns % difference |
+| Action | Parameters | Description |
+|--------|------------|-------------|
+| `look` | `url?` | Analyze page structure, CSS variables, theme, and interactive elements |
+| `baseline` | `url?` | Capture and save visual snapshot for later comparison |
+| `diff` | `url?` | Compare current state against saved baseline, returns % difference |
+| `click` | `target`, `url?` | Click an element by text, test ID, or selector |
+| `type` | `target`, `text`, `url?` | Type text into an input field |
+| `select` | `target`, `value`, `url?` | Choose an option from a dropdown |
+| `hover` | `target`, `url?` | Hover over an element |
+| `scroll` | `direction`, `url?` | Scroll the page (up/down/top/bottom) |
+| `press` | `key`, `url?` | Press a keyboard key (Enter, Escape, Tab, etc.) |
+
+### Example Usage
+
+```
+websight(action="look")
+websight(action="click", target="Submit")
+websight(action="type", target="email", text="test@example.com")
+websight(action="select", target="country", value="USA")
+```
 
 ### Programmatic API
 
 ```typescript
-import { describe, saveBaseline, closeBrowser } from 'websight';
+import { analyze, saveBaseline, closeSession, click, type } from 'websight/session';
 
 // Analyze any page
-const analysis = await describe({ url: 'http://localhost:3000' });
+const { snapshot, report } = await analyze('http://localhost:3000');
+
+// Interact
+await click('Open Modal');
+await type('email', 'test@example.com');
+await click('Submit');
 
 console.log(analysis.snapshot.theme);        // { mode: 'dark', scheme: 'monochrome' }
 console.log(analysis.snapshot.cssVars);      // { '--primary': '#3b82f6', ... }
