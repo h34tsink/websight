@@ -241,9 +241,18 @@ export async function analyze(url: string, outputDir = 'out'): Promise<{ snapsho
     mkdirSync(outputDir, { recursive: true });
   }
 
-  // Screenshot
+  // Screenshot - with timeout and fallback for CDP connections
   const screenshotPath = 'page.png';
-  await page.screenshot({ path: join(outputDir, screenshotPath) });
+  try {
+    await page.screenshot({ 
+      path: join(outputDir, screenshotPath),
+      timeout: 10000,
+      animations: 'disabled'
+    });
+  } catch {
+    // CDP connections can have screenshot issues - continue without it
+    console.log('⚠️  Screenshot skipped (CDP connection)');
+  }
 
   const snapshot: PageSnapshot = {
     url,
