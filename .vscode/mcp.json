@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "websight": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["tsx", "${workspaceFolder}/mcp-server.ts"]
+    }
+  }
+}

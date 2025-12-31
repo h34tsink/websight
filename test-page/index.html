@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agent Test Page — Layout + Actions</title>
+  <style>
+    :root {
+      --bg: #1a0a0a;
+      --panel: #2a1515;
+      --panel2: #3a2020;
+      --text: #f4e8e8;
+      --muted: #c9a5a5;
+      --accent: #ef5555;
+      --danger: #ff6b6b;
+      --good: #4ade80;
+      --border: rgba(220,38,38,.3);
+      --shadow: 0 10px 30px rgba(0,0,0,.4);
+      --radius: 24px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: radial-gradient(1200px 600px at 70% -10%, rgba(220,38,38,.25), transparent 60%),
+                  radial-gradient(900px 500px at 20% 0%, rgba(100,50,50,.2), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 18px; }
+
+    /* Sticky header */
+    header[role="banner"]{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(26,10,10,.9);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .logo {
+      width: 28px; height: 28px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(220,38,38,.95), rgba(239,68,68,.85));
+      box-shadow: 0 8px 22px rgba(220,38,38,.25);
+    }
+    nav[role="navigation"] {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    }
+    .pill {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .pill:hover { border-color: rgba(220,38,38,.45); color: var(--text); }
+    .right {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .search {
+      display: flex; align-items: center;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 10px;
+      gap: 8px;
+      min-width: 260px;
+    }
+    .search input {
+      border: none; outline: none; background: transparent;
+      color: var(--text);
+      width: 100%;
+      font-size: 13px;
+    }
+    .btn {
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.04);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn.primary {
+      background: rgba(59,130,246,.15);
+      border-color: rgba(59,130,246,.4);
+      color: #2563eb;
+    }
+    .btn.danger {
+      background: rgba(229,62,62,.12);
+      border-color: rgba(229,62,62,.35);
+      color: #c53030;
+    }
+
+    /* Layout */
+    main[role="main"] { padding: 18px 0 40px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr .7fr .7fr;
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 14px;
+    }
+    .card {
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card .hd { padding: 16px 16px 0; }
+    .card .bd { padding: 16px; }
+    .kicker {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 10px 0 8px; font-size: 30px; line-height: 1.15; }
+    .sub { color: var(--muted); margin: 0 0 12px; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .mini {
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      min-height: 120px;
+    }
+    .mini h3 { margin: 0 0 6px; font-size: 15px; }
+    .mini p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    aside[role="complementary"] .bd { display: grid; gap: 12px; }
+    .kv {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 15px;
+      color: var(--muted);
+    }
+    .kv b { color: var(--text); font-weight: 700; }
+
+    /* Mini panels for 2x2 grid */
+    .mini-panel {
+      background: var(--panel2);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .kv-mini {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    .kv-mini b { color: var(--text); font-weight: 700; }
+
+    /* Form + table */
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { display:block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      outline: none;
+    }
+    textarea { min-height: 90px; resize: vertical; }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      font-size: 13px;
+    }
+    .table th, .table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    .table th { color: var(--muted); font-weight: 600; }
+    .badge {
+      display:inline-flex; align-items:center; gap:6px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); }
+    .dot.good { background: var(--good); }
+    .dot.bad { background: var(--danger); }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 80;
+      width: 320px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(18,26,43,.92);
+      box-shadow: var(--shadow);
+      display: none;
+    }
+    .toast.show { display: block; }
+    .toast .t { font-weight: 800; margin-bottom: 4px; }
+    .toast .m { color: var(--muted); font-size: 13px; margin: 0; }
+
+    /* Modal */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      display: none;
+      z-index: 90;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+    }
+    .backdrop.show { display: flex; }
+    .modal {
+      width: min(720px, 96vw);
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(18,26,43,.98);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .modal .mh {
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal .mb { padding: 16px; }
+    .muted { color: var(--muted); }
+
+    footer[role="contentinfo"] {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding: 18px 0;
+    }
+
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+      .search { min-width: 180px; }
+    }
+  </style>
+</head>
+
+<body data-agent-page="true">
+
+<header role="banner" data-testid="header">
+  <div class="topbar wrap">
+    <div class="brand" data-testid="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <span>Agent Test Page</span>
+      <span class="pill" data-testid="env-pill">ENV: local</span>
+    </div>
+
+    <nav role="navigation" aria-label="Primary" data-testid="nav">
+      <a class="pill" href="#overview" data-testid="nav-overview">Overview</a>
+      <a class="pill" href="#actions" data-testid="nav-actions">Actions</a>
+      <a class="pill" href="#form" data-testid="nav-form">Form</a>
+      <a class="pill" href="#table" data-testid="nav-table">Table</a>
+    </nav>
+
+    <div class="right">
+      <div class="search" data-testid="search">
+        <span aria-hidden="true">🔎</span>
+        <input
+          type="search"
+          aria-label="Site Search"
+          placeholder="Search widgets, buttons, fields…"
+          data-testid="search-input"
+        />
+      </div>
+      <button class="btn primary" type="button" data-testid="btn-open-modal" aria-label="Open Help Modal">
+        Open Modal
+      </button>
+      <button class="btn" type="button" data-testid="btn-toast" aria-label="Show Toast Notification">
+        Show Toast
+      </button>
+    </div>
+  </div>
+</header>
+
+<main role="main" class="wrap" data-testid="main">
+
+  <section id="overview" class="hero" data-testid="hero">
+        <!-- LEFT SIDE: 4 panels in a 2x2 grid -->
+    <div class="card" data-testid="hero-left" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:16px;">
+      <div class="mini-panel" data-testid="panel-overview">
+        <div class="kicker">Overview</div>
+        <h3 style="margin:6px 0; font-size:15px;">System Status</h3>
+        <p class="muted" style="font-size:13px;">All systems operational</p>
+        <div class="kv-mini">
+          <span>Uptime</span><b>99.9%</b>
+          <span>Latency</span><b>42ms</b>
+        </div>
+      </div>
+      <div class="mini-panel" data-testid="panel-metrics">
+        <div class="kicker">Metrics</div>
+        <h3 style="margin:6px 0; font-size:15px;">Performance</h3>
+        <p class="muted" style="font-size:13px;">Last 24 hours</p>
+        <div class="kv-mini">
+          <span>Requests</span><b>12.4K</b>
+          <span>Errors</span><b style="color:var(--danger)">23</b>
+        </div>
+      </div>
+      <div class="mini-panel" data-testid="panel-users">
+        <div class="kicker">Users</div>
+        <h3 style="margin:6px 0; font-size:15px;">Active Sessions</h3>
+        <p class="muted" style="font-size:13px;">Real-time data</p>
+        <div class="kv-mini">
+          <span>Online</span><b style="color:var(--good)">847</b>
+          <span>Peak</span><b>1,203</b>
+        </div>
+      </div>
+      <div class="mini-panel" data-testid="panel-alerts">
+        <div class="kicker">Alerts</div>
+        <h3 style="margin:6px 0; font-size:15px;">Notifications</h3>
+        <p class="muted" style="font-size:13px;">Pending items</p>
+        <div class="kv-mini">
+          <span>Critical</span><b style="color:var(--danger)">2</b>
+          <span>Warning</span><b style="color:var(--accent)">5</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE: 4 panels in a 2x2 grid -->
+    <div class="card" data-testid="hero-right" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:16px;">
+      <div class="mini-panel" data-testid="panel-storage">
+        <div class="kicker">Storage</div>
+        <h3 style="margin:6px 0; font-size:15px;">Disk Usage</h3>
+        <p class="muted" style="font-size:13px;">Primary volume</p>
+        <div class="kv-mini">
+          <span>Used</span><b>234 GB</b>
+          <span>Free</span><b style="color:var(--good)">766 GB</b>
+        </div>
+      </div>
+      <div class="mini-panel" data-testid="panel-memory">
+        <div class="kicker">Memory</div>
+        <h3 style="margin:6px 0; font-size:15px;">RAM Usage</h3>
+        <p class="muted" style="font-size:13px;">Current allocation</p>
+        <div class="kv-mini">
+          <span>Used</span><b>12.8 GB</b>
+          <span>Total</span><b>32 GB</b>
+        </div>
+      </div>
+      <div class="mini-panel" data-testid="panel-cpu">
+        <div class="kicker">CPU</div>
+        <h3 style="margin:6px 0; font-size:15px;">Processing</h3>
+        <p class="muted" style="font-size:13px;">8 cores active</p>
+        <div class="kv-mini">
+          <span>Load</span><b>47%</b>
+          <span>Temp</span><b>62°C</b>
+        </div>
+      </div>
+      <div class="mini-panel" data-testid="panel-network">
+        <div class="kicker">Network</div>
+        <h3 style="margin:6px 0; font-size:15px;">Bandwidth</h3>
+        <p class="muted" style="font-size:13px;">Current throughput</p>
+        <div class="kv-mini">
+          <span>In</span><b style="color:var(--good)">125 Mbps</b>
+          <span>Out</span><b>89 Mbps</b>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-testid="hero-tests" style="position:relative; padding-bottom:50px;">
+      <div class="hd">
+        <div class="kicker">Test Results</div>
+        <h2 style="margin:10px 0 0; font-size:18px;">Latest Run</h2>
+      </div>
+      <div class="bd">
+        <div class="kv" data-testid="test-results">
+          <span>Total Tests</span><b>47</b>
+          <span>Passed</span><b style="color: var(--good)">42</b>
+          <span>Failed</span><b style="color: var(--danger)">3</b>
+          <span>Skipped</span><b style="color: var(--muted)">2</b>
+        </div>
+      </div>
+      <div style="position:absolute; bottom:16px; left:16px; right:16px; display:flex; gap:10px; flex-wrap:wrap;">
+        <span class="badge"><span class="dot good"></span> 89% Pass</span>
+        <span class="badge"><span class="dot bad"></span> 3 Issues</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="actions" class="grid" data-testid="content-grid">
+    <div class="card" data-testid="cards-panel">
+      <div class="hd">
+        <div class="kicker">Cards</div>
+        <h2 style="margin:10px 0 0; font-size:18px;">Three card layout</h2>
+      </div>
+      <div class="bd">
+        <div class="cards" data-testid="cards">
+          <article class="mini" data-testid="card-1">
+            <h3>Reports</h3>
+            <p>Tables, filters, export actions.</p>
+            <button class="btn" type="button" data-testid="card-1-btn">View Reports</button>
+          </article>
+          <article class="mini" data-testid="card-2">
+            <h3>Dashboard</h3>
+            <p>Metrics, status, and a clear CTA.</p>
+            <button class="btn" type="button" data-testid="card-2-btn">Open Dashboard</button>
+          </article>
+          <article class="mini" data-testid="card-3">
+            <h3>Settings</h3>
+            <p>Forms, toggles, and validation.</p>
+            <button class="btn" type="button" data-testid="card-3-btn">Open Settings</button>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <aside role="complementary" class="card" data-testid="sidebar">
+      <div class="hd">
+        <div class="kicker">Sidebar</div>
+        <h2 style="margin:10px 0 0; font-size:18px;">Quick Actions</h2>
+      </div>
+      <div class="bd">
+        <button class="btn primary" type="button" data-testid="sidebar-run">Run Check</button>
+        <button class="btn" type="button" data-testid="sidebar-refresh">Refresh</button>
+        <button class="btn danger" type="button" data-testid="sidebar-delete">Delete Something</button>
+        <div class="muted" style="font-size:13px;">
+          Sidebar simulates a right-rail action list.
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section id="form" class="card" style="margin-top:16px;" data-testid="form-section" aria-label="Contact Form Section">
+    <div class="hd">
+      <div class="kicker">Form</div>
+      <h2 style="margin:10px 0 0; font-size:18px;">Contact / Inputs</h2>
+    </div>
+    <div class="bd">
+      <form data-testid="form" aria-label="Contact Form">
+        <div class="row">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" autocomplete="name" placeholder="Ada Lovelace" data-testid="field-name" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="ada@example.com" data-testid="field-email" />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:12px;">
+          <div>
+            <label for="topic">Topic</label>
+            <select id="topic" name="topic" data-testid="field-topic" aria-label="Topic dropdown">
+              <option value="ux">UX / Layout</option>
+              <option value="automation">Automation</option>
+              <option value="performance">Performance</option>
+            </select>
+          </div>
+          <div>
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority" data-testid="field-priority">
+              <option value="low">Low</option>
+              <option value="med" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Describe what you want the agent to do…" data-testid="field-message"></textarea>
+        </div>
+
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn primary" type="submit" data-testid="form-submit">Submit</button>
+          <button class="btn" type="reset" data-testid="form-reset">Reset</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section id="table" class="card" style="margin-top:16px;" data-testid="table-section">
+    <div class="hd">
+      <div class="kicker">Table</div>
+      <h2 style="margin:10px 0 0; font-size:18px;">Recent Events</h2>
+    </div>
+    <div class="bd">
+      <table class="table" data-testid="events-table" aria-label="Events Table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Event</th>
+            <th>Status</th>
+            <th>Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span style="font-family:var(--mono)">10:14</span></td>
+            <td>Loaded page</td>
+            <td><span class="badge"><span class="dot good"></span> OK</span></td>
+            <td>system</td>
+          </tr>
+          <tr>
+            <td><span style="font-family:var(--mono)">10:18</span></td>
+            <td>Opened modal</td>
+            <td><span class="badge"><span class="dot"></span> INFO</span></td>
+            <td>user</td>
+          </tr>
+          <tr>
+            <td><span style="font-family:var(--mono)">10:22</span></td>
+            <td>Submitted form</td>
+            <td><span class="badge"><span class="dot bad"></span> FAIL</span></td>
+            <td>user</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer role="contentinfo" class="wrap" data-testid="footer">
+  <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+    <div>Agent Test Page — built for layout + interaction snapshots.</div>
+    <div style="font-family:var(--mono)">v0.1 • local</div>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite" data-testid="toast">
+  <div class="t">Toast Notification</div>
+  <p class="m">This is a small, non-blocking overlay in the bottom-right.</p>
+</div>
+
+<div class="backdrop" role="dialog" aria-modal="true" aria-label="Help Modal" data-testid="modal-backdrop">
+  <div class="modal" data-testid="modal">
+    <div class="mh">
+      <div style="font-weight:800;">Help Modal</div>
+      <button class="btn" type="button" data-testid="btn-close-modal" aria-label="Close modal">Close</button>
+    </div>
+    <div class="mb">
+      <p class="muted" style="margin-top:0;">
+        This modal intentionally covers the main content. Your agent should detect an overlay and prefer interacting inside it.
+      </p>
+      <div class="row">
+        <div>
+          <label for="modal-search">Modal Search</label>
+          <input id="modal-search" data-testid="modal-search" aria-label="Modal Search" placeholder="Search inside modal…" />
+        </div>
+        <div>
+          <label for="modal-choice">Choice</label>
+          <select id="modal-choice" data-testid="modal-choice" aria-label="Modal Choice">
+            <option>Alpha</option>
+            <option>Beta</option>
+            <option>Gamma</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn primary" type="button" data-testid="modal-confirm">Confirm</button>
+        <button class="btn danger" type="button" data-testid="modal-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const toast = document.querySelector('[data-testid="toast"]');
+  const openModalBtn = document.querySelector('[data-testid="btn-open-modal"]');
+  const closeModalBtn = document.querySelector('[data-testid="btn-close-modal"]');
+  const backdrop = document.querySelector('[data-testid="modal-backdrop"]');
+  const toastBtn = document.querySelector('[data-testid="btn-toast"]');
+
+  function showToast() {
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  function openModal() {
+    backdrop.classList.add('show');
+    const input = document.querySelector('[data-testid="modal-search"]');
+    if (input) input.focus();
+  }
+
+  function closeModal() {
+    backdrop.classList.remove('show');
+    openModalBtn.focus();
+  }
+
+  toastBtn.addEventListener('click', showToast);
+  openModalBtn.addEventListener('click', openModal);
+  closeModalBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) closeModal();
+  });
+
+  document.querySelector('[data-testid="form"]')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    showToast();
+  });
+</script>
+
+</body>
+</html>

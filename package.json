@@ -1,0 +1,53 @@
+{
+  "name": "websight",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Visual analysis MCP server - eyes for AI agents doing UI work",
+  "author": "Sean Treppa",
+  "main": "./dist/src/tools/api.js",
+  "types": "./dist/src/tools/api.d.ts",
+  "bin": {
+    "websight": "./dist/src/mcp-server.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/src/tools/api.js",
+      "types": "./dist/src/tools/api.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "vite test-page",
+    "build": "npm run build:mcp",
+    "build:mcp": "tsc",
+    "preview": "vite preview test-page",
+    "start": "node dist/src/mcp-server.js",
+    "mcp": "tsx src/mcp-server.ts",
+    "install:mcp": "node scripts/install.js",
+    "install:claude": "node scripts/install.js --target=claude",
+    "install:cursor": "node scripts/install.js --target=cursor",
+    "install:vscode": "node scripts/install.js --target=vscode",
+    "install:all": "node scripts/install.js --target=all",
+    "look": "tsx src/tools/look.ts",
+    "baseline": "tsx src/tools/baseline.ts",
+    "diff": "tsx src/tools/diff.ts",
+    "clean": "rimraf dist out"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/pngjs": "^6.0.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.1",
+    "pixelmatch": "^7.1.0",
+    "playwright": "^1.57.0",
+    "pngjs": "^7.0.0"
+  }
+}
