@@ -86,9 +86,41 @@ export interface PageSnapshot {
   sections: Section[];
   overlays: Overlay[];
   actions: Action[];
+  classes?: ClassInfo;
   textSample: string;
   screenshotPath: string | null;
   timestamp: string;
+}
+
+export interface ClassInfo {
+  tailwind: TailwindClasses;
+  customClasses: string[];
+  inlineStyles: InlineStyleElement[];
+  framework: FrameworkHint;
+}
+
+export interface TailwindClasses {
+  detected: boolean;
+  layout: string[];
+  spacing: string[];
+  colors: string[];
+  typography: string[];
+  responsivePrefixes: string[];
+  stateVariants: string[];
+  darkMode: string[];
+  all: string[];
+}
+
+export interface InlineStyleElement {
+  tag: string;
+  selector: string;
+  styles: string[];
+}
+
+export interface FrameworkHint {
+  name: string | null;
+  confidence: 'high' | 'medium' | 'low' | 'none';
+  indicators: string[];
 }
 
 export interface DescribeOptions {

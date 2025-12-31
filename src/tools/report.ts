@@ -117,6 +117,73 @@ export function generateReport(snapshot: PageSnapshot): string {
   }
   lines.push('');
 
+  // CSS Framework & Classes
+  if (snapshot.classes) {
+    const { classes } = snapshot;
+    
+    lines.push('CSS FRAMEWORK & CLASSES');
+    lines.push('-'.repeat(40));
+    
+    // Framework detection
+    if (classes.framework.name) {
+      lines.push(`Framework: ${classes.framework.name} (${classes.framework.confidence} confidence)`);
+      if (classes.framework.indicators.length > 0) {
+        lines.push(`  Indicators: ${classes.framework.indicators.slice(0, 5).join(', ')}`);
+      }
+    } else {
+      lines.push('Framework: None detected (custom CSS)');
+    }
+    lines.push('');
+    
+    // Tailwind details
+    if (classes.tailwind.detected) {
+      lines.push('TAILWIND CLASSES');
+      lines.push('-'.repeat(40));
+      
+      if (classes.tailwind.layout.length > 0) {
+        lines.push(`  Layout: ${classes.tailwind.layout.slice(0, 10).join(', ')}`);
+      }
+      if (classes.tailwind.spacing.length > 0) {
+        lines.push(`  Spacing: ${classes.tailwind.spacing.slice(0, 10).join(', ')}`);
+      }
+      if (classes.tailwind.colors.length > 0) {
+        lines.push(`  Colors: ${classes.tailwind.colors.slice(0, 10).join(', ')}`);
+      }
+      if (classes.tailwind.typography.length > 0) {
+        lines.push(`  Typography: ${classes.tailwind.typography.slice(0, 10).join(', ')}`);
+      }
+      if (classes.tailwind.responsivePrefixes.length > 0) {
+        lines.push(`  Responsive: ${classes.tailwind.responsivePrefixes.join(', ')}`);
+      }
+      if (classes.tailwind.stateVariants.length > 0) {
+        lines.push(`  State variants: ${classes.tailwind.stateVariants.join(', ')}`);
+      }
+      if (classes.tailwind.darkMode.length > 0) {
+        lines.push(`  Dark mode: ${classes.tailwind.darkMode.slice(0, 5).join(', ')}`);
+      }
+      lines.push('');
+    }
+    
+    // Custom classes
+    if (classes.customClasses.length > 0) {
+      lines.push('CUSTOM CLASSES');
+      lines.push('-'.repeat(40));
+      lines.push(`  ${classes.customClasses.slice(0, 20).join(', ')}`);
+      lines.push('');
+    }
+    
+    // Inline styles warning
+    if (classes.inlineStyles.length > 0) {
+      lines.push('⚠️  INLINE STYLES DETECTED');
+      lines.push('-'.repeat(40));
+      lines.push(`  Found ${classes.inlineStyles.length} elements with inline styles:`);
+      for (const el of classes.inlineStyles.slice(0, 5)) {
+        lines.push(`    ${el.selector}: ${el.styles.slice(0, 3).join(', ')}${el.styles.length > 3 ? '...' : ''}`);
+      }
+      lines.push('');
+    }
+  }
+
   // Actions
   lines.push('TOP ACTIONS');
   lines.push('-'.repeat(40));

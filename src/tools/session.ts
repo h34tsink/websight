@@ -14,6 +14,7 @@ import { extractSections } from './extractors/sections.js';
 import { extractOverlays } from './extractors/overlays.js';
 import { extractActions } from './extractors/actions.js';
 import { extractTheme } from './extractors/theme.js';
+import { extractClasses } from './extractors/classes.js';
 import { generateReport } from './report.js';
 import type { PageSnapshot, Action } from './types.js';
 
@@ -220,12 +221,13 @@ export async function analyze(url: string, outputDir = 'out'): Promise<{ snapsho
   const page = await getPage(url);
 
   // Extract all data in parallel
-  const [landmarks, sections, overlays, actions, theme, title] = await Promise.all([
+  const [landmarks, sections, overlays, actions, theme, classes, title] = await Promise.all([
     extractLandmarks(page, viewport),
     extractSections(page, viewport),
     extractOverlays(page, viewport),
     extractActions(page, viewport),
     extractTheme(page),
+    extractClasses(page),
     page.title()
   ]);
 
@@ -252,6 +254,7 @@ export async function analyze(url: string, outputDir = 'out'): Promise<{ snapsho
     sections,
     overlays,
     actions,
+    classes,
     textSample,
     screenshotPath,
     timestamp: new Date().toISOString()

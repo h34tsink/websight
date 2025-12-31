@@ -1,0 +1,82 @@
+======================================================================
+WEBSIGHT - PAGE LAYOUT & THEME REPORT
+======================================================================
+URL:      https://tailwindcss.com/
+Title:    Tailwind CSS - Rapidly build modern websites without ever leaving your HTML.
+Viewport: 1280×720
+Generated: 2025-12-31T23:47:26.573Z
+
+WHAT IT LOOKS LIKE
+----------------------------------------
+Footer is at the bottom of the page. Theme: dark background with inter font. Interactive elements visible: 3 buttons, 8 links.
+
+LANDMARKS
+----------------------------------------
+Below the fold:
+  • FOOTER at y=10296
+
+SECTIONS
+----------------------------------------
+• No distinct sections detected
+
+THEME
+----------------------------------------
+Background: rgba(0, 0, 0, 0)
+Text Color: rgb(0, 0, 0)
+Font: inter (16px)
+Line Height: 24px
+
+Fonts: inter, plexMono
+Font Sizes: 16px, 13px, 14px, 12px, 17px, 40px, 96px, 18px
+Border Radii: 16px, 3.0504e+07px, 6px, 32px, 12px, 8px, 24px, 16px 16px 0px 0px
+
+CSS FRAMEWORK & CLASSES
+----------------------------------------
+Framework: Tailwind CSS (high confidence)
+  Indicators: dark:bg-gray-950, max-w-screen, border-b, border-black/5, dark:border-white/10
+
+TAILWIND CLASSES
+----------------------------------------
+  Layout: flex, items-center, justify-between, gap-8, gap-4, gap-0.5, gap-6, inline-flex, gap-1, hidden
+  Spacing: gap-8, px-4, sm:px-6, gap-4, gap-0.5, py-0.5, pr-1.5, pl-2.5, gap-6, gap-1
+  Colors: dark:bg-gray-950, border-b, border-black/5, dark:border-white/10, bg-white, text-black, dark:text-white, bg-gray-950/5, text-xs/5, text-gray-950
+  Typography: text-xs/5, font-medium, text-gray-950, font-sans, text-xs/4, text-gray-500, dark:text-gray-400, text-sm/6, text-sky-800, dark:text-sky-300
+  Responsive: sm:, md:, lg:, xl:, 2xl:
+  State variants: hover:, group-hover:, group-data-dragging:, group-data-[tooltip-hover=true]:
+  Dark mode: dark:bg-gray-950, dark:border-white/10, dark:text-white, dark:bg-white/10, dark:hover:bg-white/12.5
+
+CUSTOM CLASSES
+----------------------------------------
+  antialiased, system, isolate, overflow-x-hidden, fixed, inset-x-0, top-0, z-10, shrink-0, fill-sky-400, tabular-nums, data-active:bg-gray-950/7.5, size-4, fill-gray-400, inset-ring, inset-ring-gray-950/8, -ml-0.5, fill-gray-600, [.os-macos_&]:block, not-[.os-macos_&]:block
+
+⚠️  INLINE STYLES DETECTED
+----------------------------------------
+  Found 20 elements with inline styles:
+    span: color
+    span: color
+    span: color
+    span: color
+    span: color
+
+TOP ACTIONS
+----------------------------------------
+  • button: "Select version of library"#headlessui-menu-button-«Ruaulb»
+  • button: "⌘KCtrl K"
+  • link: "Docs"
+  • link: "Blog"
+  • link: "Showcase"
+  • link: "Sponsor"
+  • link: "Plus"
+  • link: "Home"
+  • link: "GitHub repository"
+  • link: "Get started"
+  • button: "Quick search⌘KCtrl K"
+  • pre: "<div class="flex flex-col items-center rounded-2xl"
+  • link: "Become a sponsor" ⬇️
+  • button: "Check availability" ⬇️
+  • pre: "@theme {  --font-sans: "Inter", sans-serif;  --fon" ⬇️
+
+======================================================================
+Screenshot: page.png
+JSON: snapshot.json
+======================================================================
