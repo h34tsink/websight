@@ -2,49 +2,72 @@
 
 ## Interaction System Status
 
-### Test Results: 54/57 passing ✅ (95%)
+### Test Results: 57/57 passing ✅ (100%)
 
 Last run: 2024-12-31
-- Average interaction time: ~30ms
-- Total test time: ~17s for 57 interactions
+- Average interaction time: ~32ms
+- Total test time: ~1.8s for 57 interactions
 
 ### Fixed ✅
 
 - [x] **Double-wrapped selectors bug** - `findSelector()` was wrapping `[data-testid="..."]` again
-  - Fixed in `src/tools/session.ts` - now uses `locator.value` directly
-- [x] **testId fallback** - Now tries `[data-testid="${target}"]` for simple alphanumeric targets before text fallback
+- [x] **testId fallback** - Now tries `[data-testid="${target}"]` for simple alphanumeric targets
+- [x] **Select values** - Tests now use actual `value` attributes not display text
+- [x] **Modal close** - Tests click close button instead of Escape key
+- [x] **CDP smart targeting** - `tryConnectCDP(targetUrl)` finds correct tab or navigates
 
-### Remaining Test Failures (test script issues, not bugs)
+### Available Actions
 
-1. **`select topic`** - Test used "Feature Request" but options are: Bug, Feature, Question
-2. **`select timezone`** - Test used wrong option text format
-3. **`btn-toast`** - Modal backdrop blocking (test ordering - modal wasn't closed first)
+| Action | Description | Example |
+|--------|-------------|---------|
+| `click` | Click element | `click('btn-save')` |
+| `type` | Type into input | `type('field-name', 'John')` |
+| `select` | Select dropdown option | `select('field-country', 'ca')` |
+| `hover` | Hover over element | `hover('hover-card')` |
+| `press` | Press keyboard key | `press('Enter')` |
+| `scroll` | Scroll page | `scroll('down')` |
+| `waitFor` | Wait for element | `waitFor('modal-backdrop')` |
+| `getValue` | Get input/text value | `getValue('field-name')` |
+| `isVisible` | Check visibility | `isVisible('btn-save')` |
+| `getAttribute` | Get element attribute | `getAttribute('btn', 'type')` |
+| `screenshot` | Capture screenshot | `screenshot('out.png')` |
 
 ### Known Limitations
 
-- Action extraction capped at 60 elements (may miss some)
-- Overlays block interactions (expected Playwright behavior)
-- Select requires exact option text match
+- Screenshot times out on CDP connections (Playwright limitation)
+- Action extraction capped at 60 elements
+- Overlays block interactions (expected behavior)
+- Select requires exact option value match
 
 ## Feature Backlog
 
-### High Priority
+### High Priority - DONE ✅
 
-- [ ] `waitFor` action - wait for element to appear/disappear
-- [ ] `getValue` action - read current value from input/select
-- [ ] `isVisible` action - check if element is visible/enabled
+- [x] `waitFor` action - wait for element to appear/disappear
+- [x] `getValue` action - read current value from input/select
+- [x] `isVisible` action - check if element is visible/enabled
+- [x] `screenshot` action - capture current state without full analysis
+- [x] `getAttribute` action - read element attributes
 
 ### Medium Priority
 
-- [ ] `screenshot` action - capture current state without full analysis
-- [ ] `getAttribute` action - read element attributes
 - [ ] Batch multiple interactions without re-analyzing
+- [ ] Element count/exists check
+- [ ] Form fill helper (fill multiple fields at once)
 
 ### Low Priority
 
 - [ ] Drag-and-drop support
 - [ ] File upload interactions
 - [ ] Interaction history/replay
+
+## CSS Framework Detection
+
+- [x] Tailwind CSS detection (classes, responsive, dark mode)
+- [x] Bootstrap detection
+- [x] Material UI detection
+- [x] Custom class extraction
+- [x] Inline style warnings
 
 ## Test Page Improvements
 

@@ -573,6 +573,154 @@ export async function getPageInfo(url?: string): Promise<{ url: string; title: s
   };
 }
 
+/**
+ * Get the current value of an input, select, or textarea
+ */
+export async function getValue(target: string, url?: string): Promise<InteractionResult & { value?: string }> {
+  const start = Date.now();
+  const page = await getPage(url);
+  const selector = findSelector(target, state.lastSnapshot);
+
+  try {
+    const value = await page.inputValue(selector, { timeout: 5000 });
+    
+    return {
+      success: true,
+      action: 'getValue',
+      target: selector,
+      message: `Got value "${value}" from "${target}"`,
+      value,
+      durationMs: Date.now() - start
+    };
+  } catch {
+    // Try getting text content for non-input elements
+    try {
+      const text = await page.locator(selector).textContent({ timeout: 2000 });
+      return {
+        success: true,
+        action: 'getValue',
+        target: selector,
+        message: `Got text "${text}" from "${target}"`,
+        value: text || '',
+        durationMs: Date.now() - start
+      };
+    } catch (error) {
+      return {
+        success: false,
+        action: 'getValue',
+        target: selector,
+        message: `Failed to get value from "${target}": ${error instanceof Error ? error.message : 'Unknown error'}`,
+        durationMs: Date.now() - start
+      };
+    }
+  }
+}
+
+/**
+ * Check if an element is visible and optionally enabled
+ */
+export async function isVisible(target: string, url?: string): Promise<InteractionResult & { visible?: boolean; enabled?: boolean }> {
+  const start = Date.now();
+  const page = await getPage(url);
+  const selector = findSelector(target, state.lastSnapshot);
+
+  try {
+    const locator = page.locator(selector);
+    const visible = await locator.isVisible({ timeout: 2000 });
+    let enabled = true;
+    
+    if (visible) {
+      enabled = await locator.isEnabled({ timeout: 1000 }).catch(() => true);
+    }
+    
+    return {
+      success: true,
+      action: 'isVisible',
+      target: selector,
+      message: visible 
+        ? `"${target}" is visible${enabled ? '' : ' (disabled)'}`
+        : `"${target}" is not visible`,
+      visible,
+      enabled,
+      durationMs: Date.now() - start
+    };
+  } catch (error) {
+    return {
+      success: false,
+      action: 'isVisible',
+      target: selector,
+      message: `Failed to check visibility of "${target}": ${error instanceof Error ? error.message : 'Unknown error'}`,
+      visible: false,
+      enabled: false,
+      durationMs: Date.now() - start
+    };
+  }
+}
+
+/**
+ * Take a screenshot without full analysis
+ */
+export async function screenshot(outputPath: string, url?: string): Promise<InteractionResult> {
+  const start = Date.now();
+  const page = await getPage(url);
+
+  try {
+    await page.screenshot({ 
+      path: outputPath, 
+      timeout: 10000,
+      animations: 'disabled'
+    });
+    
+    return {
+      success: true,
+      action: 'screenshot',
+      target: outputPath,
+      message: `Screenshot saved to "${outputPath}"`,
+      durationMs: Date.now() - start
+    };
+  } catch (error) {
+    return {
+      success: false,
+      action: 'screenshot',
+      target: outputPath,
+      message: `Failed to take screenshot: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      durationMs: Date.now() - start
+    };
+  }
+}
+
+/**
+ * Get an attribute value from an element
+ */
+export async function getAttribute(target: string, attribute: string, url?: string): Promise<InteractionResult & { value?: string | null }> {
+  const start = Date.now();
+  const page = await getPage(url);
+  const selector = findSelector(target, state.lastSnapshot);
+
+  try {
+    const value = await page.locator(selector).getAttribute(attribute, { timeout: 5000 });
+    
+    return {
+      success: true,
+      action: 'getAttribute',
+      target: selector,
+      message: value !== null 
+        ? `Got ${attribute}="${value}" from "${target}"`
+        : `"${target}" has no "${attribute}" attribute`,
+      value,
+      durationMs: Date.now() - start
+    };
+  } catch (error) {
+    return {
+      success: false,
+      action: 'getAttribute',
+      target: selector,
+      message: `Failed to get attribute from "${target}": ${error instanceof Error ? error.message : 'Unknown error'}`,
+      durationMs: Date.now() - start
+    };
+  }
+}
+
 // Export session API
 export const session = {
   analyze,
@@ -585,7 +733,11 @@ export const session = {
   press,
   waitFor,
   scroll,
-  getPageInfo
+  getPageInfo,
+  getValue,
+  isVisible,
+  screenshot,
+  getAttribute
 };
 
 export default session;
