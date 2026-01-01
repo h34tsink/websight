@@ -659,17 +659,36 @@ export async function isVisible(target: string, url?: string): Promise<Interacti
 
 /**
  * Take a screenshot without full analysis
+ * @param outputPath - Path to save the screenshot
+ * @param url - Optional URL to navigate to first
+ * @param options - { fast: true } skips font/animation waiting (only works on launched browsers)
  */
-export async function screenshot(outputPath: string, url?: string): Promise<InteractionResult> {
+export async function screenshot(
+  outputPath: string, 
+  url?: string,
+  options?: { fast?: boolean }
+): Promise<InteractionResult> {
   const start = Date.now();
   const page = await getPage(url);
 
   try {
-    await page.screenshot({ 
-      path: outputPath, 
-      timeout: 10000,
-      animations: 'disabled'
-    });
+    // Fast mode only works on launched browsers (not CDP connections)
+    if (options?.fast && !state.isRemote) {
+      const client = await page.context().newCDPSession(page);
+      const { data } = await client.send('Page.captureScreenshot', {
+        format: 'png',
+        captureBeyondViewport: false
+      });
+      writeFileSync(outputPath, Buffer.from(data, 'base64'));
+      await client.detach();
+    } else {
+      // Standard mode or CDP connection
+      await page.screenshot({ 
+        path: outputPath, 
+        timeout: 5000,
+        animations: 'disabled'
+      });
+    }
     
     return {
       success: true,
