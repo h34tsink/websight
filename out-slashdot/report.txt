@@ -1,0 +1,260 @@
+======================================================================
+WEBSIGHT - PAGE LAYOUT & THEME REPORT
+======================================================================
+URL:      https://slashdot.org/
+Title:    Slashdot: News for nerds, stuff that matters
+Viewport: 1280×720
+Generated: 2026-01-01T00:42:27.426Z
+
+WHAT IT LOOKS LIKE
+----------------------------------------
+The page has a sticky header with navigation at the top. Above the fold: Tech Startups Are Handing Out Free Nicotine Pouches to Boost Productivity
+
+		
+		
+		
+		
+
+		
+		
+		
+			, Slashdot Top Deals, Tech Startups Are Handing Out Free Nicotine Pouches to Boost Productivity
+
+		
+		
+		
+		
+
+		
+		
+		
+			. Scroll down for: DarkSpectre Hackers Spread Malware To 8.8 Million Chrome, Edge, and Firefox Users  (cyberpress.org) , Slashdot Poll, When will AGI be achieved?. Theme: light background with Arial font. Interactive elements visible: 33 links, 1 inputs.
+
+LANDMARKS
+----------------------------------------
+Above the fold:
+  • HEADER at y=316, 892×64px
+  • HEADER (slashdot_deals-title) at y=263, 298×29px
+  • NAV (Global Navigation) at y=12, 874×40px
+  • NAV (user access and account controls) at y=12, 314×40px
+  • NAV at y=52, 479×29px
+  • NAV at y=52, 247×29px
+  • ASIDE (slashboxes) at y=223, 320×2443px
+  • FOOTER at y=719, 892×20px
+Below the fold:
+  • HEADER at y=758
+  • HEADER at y=1364
+  • HEADER at y=1596
+  • HEADER at y=2136
+  • HEADER at y=2566
+  • HEADER at y=3152
+  • HEADER at y=3608
+  • HEADER at y=4096
+  • HEADER at y=4513
+  • HEADER at y=4989
+  • HEADER at y=5347
+  • HEADER at y=5588
+  • HEADER at y=6025
+  • HEADER at y=6247
+  • HEADER at y=6566
+  • HEADER (poll-title) at y=854
+  • HEADER (mostdiscussed-title) at y=1276
+  • HEADER (srandblock-title) at y=1635
+  • HEADER (thisday-title) at y=1975
+  • HEADER (sourceforge2-title) at y=2348
+  • NAV at y=7173
+  • NAV at y=7253
+  • FOOTER at y=1324
+  • FOOTER at y=2097
+  • FOOTER at y=2527
+  • FOOTER at y=3112
+  • FOOTER at y=3568
+  • FOOTER at y=4474
+  • FOOTER at y=4949
+  • FOOTER at y=5549
+  • FOOTER at y=5985
+  • FOOTER at y=6527
+  • FOOTER at y=1186
+  • FOOTER (fhft) at y=7171
+  • FOOTER (ft) at y=7253
+
+SECTIONS
+----------------------------------------
+Above the fold:
+  • Tech Startups Are Handing Out Free Nicotine Pouches to Boost Productivity
+
+		
+		
+		
+		
+
+		
+		
+		
+			 - "Tech Startups Are Handing Out Free Nicotine Pouches to Boost Productivity
+
+		
+		
+		
+		
+
+		
+		
+		
+			"
+  • Slashdot Top Deals - "Slashdot Top Deals"
+  • Tech Startups Are Handing Out Free Nicotine Pouches to Boost Productivity
+
+		
+		
+		
+		
+
+		
+		
+		
+			 - "Tech Startups Are Handing Out Free Nicotine Pouches to Boost Productivity
+
+		
+		
+		
+		
+
+		
+		
+		
+			"
+Scroll down to see:
+  • DarkSpectre Hackers Spread Malware To 8.8 Million Chrome, Edge, and Firefox Users  (cyberpress.org)  (y=758)
+  • Slashdot Poll (y=854)
+  • When will AGI be achieved? (y=884)
+  • Most Discussed (y=1276)
+  • Compare the top business software of 2025 (y=1364)
+  • OpenAI Is Paying Employees More Than Any Major Tech Startup in History
+
+		
+		
+		
+		
+
+		
+		
+		
+			10 (y=1596)
+  • Your Rights Online (y=1635)
+  • This Day on Slashdot (y=1975)
+  • Trump Administration Removes Three Spyware-Linked Execs From Sanctions List  (reuters.com) 
+
+		
+		
+	 (y=2136)
+  • Sourceforge Top Downloads (y=2348)
+  • France Targets Australia-Style Social Media Ban For Children Next Year  (theguardian.com) 
+
+		
+		
+		 (y=2566)
+  • NJ's Answer To Flooding: It Has Bought Out and Demolished 1,200 Properties  (arstechnica.com) 
+
+		
+	 (y=3152)
+  • NASA Craft To Face Heat-Shield Test on Its First Astronaut Flight Next Year  (msn.com) 
+
+		
+		
+		
+		 (y=3608)
+  • JPMorgan Says Javice Firms Billed Millions Just for 'Attendance'  (bloomberg.com) 
+
+		
+		
+		
+		
+
+		
+ (y=4096)
+  • Net Neutrality Was Back, Until It Wasn't  (theverge.com) 
+
+		
+		
+		
+		
+
+		
+		
+		
+			5 (y=4513)
+  • Poor Sleep Quality Accelerates Brain Aging  (thelancet.com) 
+
+		
+		
+		
+		
+
+		
+		
+		
+			29 (y=4989)
+  • Slashdot Asks: Your Favorite 2025 Movies, TV Shows and Books?
+
+		
+		
+		
+		
+
+		
+		
+		
+			34 (y=5347)
+
+THEME
+----------------------------------------
+Background: rgb(204, 204, 204)
+Text Color: rgb(0, 0, 0)
+Font: Arial (13px)
+Line Height: 19.5px
+
+Fonts: Times New Roman, Arial, arial
+Font Sizes: 13px, 16px, 14px, 11.05px, 20px, 12px, 11.2px, 13.3333px
+Border Radii: 10px 0px 0px, 4px, 5px, 13px, 10px 10px 0px 0px, 0px 9.1px 0px 0px, 3px, 2px
+
+CSS FRAMEWORK & CLASSES
+----------------------------------------
+Framework: Bootstrap (medium confidence)
+  Indicators: container, btn, btn-success, row, btn-close
+
+CUSTOM CLASSES
+----------------------------------------
+  asload, anon, index2, stories-view, nav-wrap, nav-primary, logo, nav-site, icon-book, filter-firehose, nav-label, icon-angle-right, icon-chart-bar, sd-mini, btn, btn-success, nav-user, form-inline, nav-search-form, form-group
+
+⚠️  INLINE STYLES DETECTED
+----------------------------------------
+  Found 20 elements with inline styles:
+    iframe#1628144c6ea4a78: display, height, width...
+    svg#Layer_1: height, width, margin-top...
+    svg#Bluesky--Streamline-Simple-Icons.svg: margin-top, margin-right, margin-bottom...
+    fieldset: border-top-left-radius, border-top-right-radius, border-bottom-right-radius...
+    div: height
+
+TOP ACTIONS
+----------------------------------------
+  • link: "Slashdot"
+  • link: "Stories"
+  • link: "All"
+  • link: "Popular"
+  • link: "Polls"
+  • link: "Software"
+  • link: "Thought Leadership"
+  • link: "Login"
+  • link: "Sign up"
+  • input:text: "Search"
+  • link: "Submit"
+  • link: "Twitter"
+  • link: "Mastodon"
+  • link: "BlueskyBluesky"
+  • link: "Devices"
+
+======================================================================
+Screenshot: page.png
+JSON: snapshot.json
+======================================================================

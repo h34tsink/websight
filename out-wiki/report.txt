@@ -1,0 +1,86 @@
+======================================================================
+WEBSIGHT - PAGE LAYOUT & THEME REPORT
+======================================================================
+URL:      https://en.wikipedia.org/wiki/Badger
+Title:    Badger - Wikipedia
+Viewport: 1280×720
+Generated: 2026-01-01T00:47:08.406Z
+
+WHAT IT LOOKS LIKE
+----------------------------------------
+The page has a sticky header with navigation at the top. The main content area spans the page width. Above the fold: fundraising banner. Footer is at the bottom of the page. Theme: light background with sans-serif font. Interactive elements visible: 8 buttons, 14 links, 13 inputs.
+
+LANDMARKS
+----------------------------------------
+Above the fold:
+  • HEADER at y=0, 1280×66px
+  • HEADER at y=641, 752×40px
+  • NAV (Site) at y=17, 20×32px
+  • NAV (Personal tools) at y=25, 202×16px
+  • NAV (Contents) at y=687, 208×485px
+  • NAV (Namespaces) at y=681, 96×36px
+  • NAV (Views) at y=681, 233×36px
+  • NAV (Page tools) at y=681, 74×36px
+  • NAV (Appearance) at y=687, 196×428px
+  • MAIN (content) at y=641, 972×11510px
+Below the fold:
+  • NAV (Extant_Carnivora_species77315) at y=11993
+  • NAV (Navbox599) at y=12028
+  • NAV (Portals) at y=12063
+  • FOOTER (footer) at y=12201
+
+SECTIONS
+----------------------------------------
+Above the fold:
+  • fundraising banner
+
+THEME
+----------------------------------------
+Background: rgb(248, 249, 250)
+Text Color: rgb(32, 33, 34)
+Font: sans-serif (16px)
+Line Height: normal
+
+Fonts: sans-serif, Arial, system-ui, Montserrat, Caveat Brush
+Font Sizes: 16px, 14px, 14.08px, 13px, 12px, 18px, 17px, 24.64px
+Border Radii: 2px, 2px 0px 0px 2px, 0px 2px 2px 0px, 10.56px, 0px 0px 0px 10.56px, 0px 10.56px 0px 0px, 12px
+
+CSS FRAMEWORK & CLASSES
+----------------------------------------
+Framework: None detected (custom CSS)
+
+CUSTOM CLASSES
+----------------------------------------
+  client-js, vector-feature-language-in-header-enabled, vector-feature-language-in-main-page-header-disabled, vector-feature-page-tools-pinned-disabled, vector-feature-toc-pinned-clientpref-1, vector-feature-main-menu-pinned-disabled, vector-feature-limited-width-clientpref-1, vector-feature-limited-width-content-enabled, vector-feature-custom-font-size-clientpref-1, vector-feature-appearance-pinned-clientpref-1, vector-feature-night-mode-enabled, skin-theme-clientpref-day, vector-toc-available, vector-animations-ready, ve-available, skin--responsive, skin-vector, skin-vector-search-vue, mediawiki, ltr
+
+⚠️  INLINE STYLES DETECTED
+----------------------------------------
+  Found 17 elements with inline styles:
+    img.mw-logo-wordmark: width, height
+    img.mw-logo-tagline: width, height
+    div#frb-main: display
+    div.frb-ptf: display
+    div.frb-step-monthly-diff-amt: display
+
+TOP ACTIONS
+----------------------------------------
+  • input:search: "Search Wikipedia"#searchInput
+  • button: "Search"
+  • link: "Donate"
+  • link: "Create account"
+  • link: "Log in"
+  • button: "Close"
+  • input:radio: "Once"#frb-frequency-onetime
+  • input:radio: "Monthly"#frb-frequency-monthly
+  • input:radio: "Annual"#frb-frequency-annual
+  • input:radio: "$2.75"#frb-amt-ps1
+  • input:radio: "$15"#frb-amt-ps2
+  • input:radio: "$25"#frb-amt-ps3
+  • input:radio: "$50"#frb-amt-ps4
+  • input:radio: "$100"#frb-amt-ps5
+  • input:radio: "$250"#frb-amt-ps6
+
+======================================================================
+Screenshot: page.png
+JSON: snapshot.json
+======================================================================

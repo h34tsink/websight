@@ -169,14 +169,23 @@ async function getPage(url?: string): Promise<Page> {
     });
   }
 
-  // Navigate only if URL changed (and not using remote browser's current page)
-  if (url && url !== state.currentUrl && !state.isRemote) {
-    await state.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    // Smart wait - only wait if page has pending network
-    await state.page.waitForLoadState('networkidle', { timeout: 3000 }).catch(() => {});
+  // Navigate only if URL changed
+  if (url && url !== state.currentUrl) {
+    if (state.isRemote) {
+      // For remote browser, navigate if URL is different from current page
+      const currentPageUrl = state.page.url();
+      if (url !== currentPageUrl) {
+        await state.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+        await state.page.waitForLoadState('networkidle', { timeout: 3000 }).catch(() => {});
+      }
+    } else {
+      await state.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      // Smart wait - only wait if page has pending network
+      await state.page.waitForLoadState('networkidle', { timeout: 3000 }).catch(() => {});
+    }
     state.currentUrl = url;
-  } else if (state.isRemote) {
-    // For remote browser, just update our tracked URL
+  } else if (!url && state.isRemote) {
+    // For remote browser with no URL, update tracked URL to current page
     state.currentUrl = state.page.url();
   }
 
@@ -317,6 +326,23 @@ function findSelector(target: string, snapshot?: PageSnapshot | null): string {
   // If it looks like a selector already, use it
   if (target.startsWith('[') || target.startsWith('#') || target.startsWith('.') || target.includes('=')) {
     return target;
+  }
+
+  // Common HTML tag names - use as-is
+  const htmlTags = ['a', 'abbr', 'address', 'article', 'aside', 'audio', 'b', 'blockquote', 'body', 
+    'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 
+    'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 
+    'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 
+    'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'label', 
+    'legend', 'li', 'link', 'main', 'map', 'mark', 'menu', 'meta', 'meter', 'nav', 'noscript', 
+    'object', 'ol', 'optgroup', 'option', 'output', 'p', 'picture', 'pre', 'progress', 'q', 
+    'rp', 'rt', 'ruby', 's', 'samp', 'script', 'search', 'section', 'select', 'slot', 'small', 
+    'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 
+    'template', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 
+    'ul', 'var', 'video', 'wbr'];
+  
+  if (htmlTags.includes(target.toLowerCase())) {
+    return target.toLowerCase();
   }
 
   // Try to find by name or locator in last snapshot
@@ -740,6 +766,206 @@ export async function getAttribute(target: string, attribute: string, url?: stri
   }
 }
 
+/**
+ * Navigate to a URL without full analysis (fast)
+ * @param url - URL to navigate to
+ * @param options - waitUntil: 'load' | 'domcontentloaded' | 'networkidle' (default: 'load')
+ */
+export async function goto(url: string, options?: { waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' }): Promise<InteractionResult> {
+  const start = Date.now();
+  const page = await getPage();
+  const waitUntil = options?.waitUntil ?? 'load';
+
+  try {
+    await page.goto(url, { waitUntil, timeout: 30000 });
+    state.currentUrl = url;
+    
+    return {
+      success: true,
+      action: 'goto',
+      target: url,
+      message: `Navigated to "${url}"`,
+      durationMs: Date.now() - start
+    };
+  } catch (error) {
+    return {
+      success: false,
+      action: 'goto',
+      target: url,
+      message: `Failed to navigate: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      durationMs: Date.now() - start
+    };
+  }
+}
+
+/**
+ * Wait for navigation to complete (use after click/press that triggers navigation)
+ */
+export async function waitForNavigation(timeoutMs = 10000): Promise<InteractionResult> {
+  const start = Date.now();
+  const page = await getPage();
+
+  try {
+    await page.waitForLoadState('domcontentloaded', { timeout: timeoutMs });
+    state.currentUrl = page.url();
+    
+    return {
+      success: true,
+      action: 'waitForNavigation',
+      target: page.url(),
+      message: `Navigation complete: ${page.url()}`,
+      durationMs: Date.now() - start
+    };
+  } catch (error) {
+    return {
+      success: false,
+      action: 'waitForNavigation',
+      target: '',
+      message: `Navigation timeout: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      durationMs: Date.now() - start
+    };
+  }
+}
+
+/**
+ * Get text content from element(s)
+ * @param selector - CSS selector or testId
+ * @param options - { all: true } returns array, { minLength: N } filters short content
+ */
+export async function getText(
+  selector: string, 
+  url?: string,
+  options?: { all?: boolean; minLength?: number }
+): Promise<InteractionResult & { text?: string; texts?: string[] }> {
+  const start = Date.now();
+  const page = await getPage(url);
+  const resolvedSelector = findSelector(selector, state.lastSnapshot);
+  const minLen = options?.minLength ?? 0;
+
+  try {
+    if (options?.all) {
+      // Get all matching elements
+      const elements = await page.locator(resolvedSelector).all();
+      const texts: string[] = [];
+      
+      for (const el of elements) {
+        const text = await el.textContent({ timeout: 1000 }).catch(() => '');
+        if (text && text.trim().length >= minLen) {
+          texts.push(text.trim());
+        }
+      }
+      
+      return {
+        success: true,
+        action: 'getText',
+        target: resolvedSelector,
+        message: `Got ${texts.length} text elements from "${selector}"`,
+        texts,
+        durationMs: Date.now() - start
+      };
+    } else {
+      // Get first non-empty match
+      const elements = await page.locator(resolvedSelector).all();
+      
+      for (const el of elements) {
+        const text = await el.textContent({ timeout: 1000 }).catch(() => '');
+        if (text && text.trim().length >= minLen) {
+          return {
+            success: true,
+            action: 'getText',
+            target: resolvedSelector,
+            message: `Got text from "${selector}"`,
+            text: text.trim(),
+            durationMs: Date.now() - start
+          };
+        }
+      }
+      
+      return {
+        success: false,
+        action: 'getText',
+        target: resolvedSelector,
+        message: `No text content found for "${selector}"`,
+        durationMs: Date.now() - start
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      action: 'getText',
+      target: resolvedSelector,
+      message: `Failed to get text: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      durationMs: Date.now() - start
+    };
+  }
+}
+
+/**
+ * Run custom JavaScript in the page context
+ * @param fn - Function to execute (must be serializable)
+ * @param args - Arguments to pass to the function
+ */
+export async function evaluate<T>(
+  fn: string | ((...args: unknown[]) => T),
+  args?: unknown[],
+  url?: string
+): Promise<InteractionResult & { result?: T }> {
+  const start = Date.now();
+  const page = await getPage(url);
+
+  try {
+    const result = await page.evaluate(fn as Parameters<typeof page.evaluate>[0], args);
+    
+    return {
+      success: true,
+      action: 'evaluate',
+      target: 'custom function',
+      message: 'Executed custom function',
+      result: result as T,
+      durationMs: Date.now() - start
+    };
+  } catch (error) {
+    return {
+      success: false,
+      action: 'evaluate',
+      target: 'custom function',
+      message: `Evaluation failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      durationMs: Date.now() - start
+    };
+  }
+}
+
+/**
+ * Count elements matching a selector
+ */
+export async function count(selector: string, url?: string): Promise<InteractionResult & { count?: number }> {
+  const start = Date.now();
+  const page = await getPage(url);
+  const resolvedSelector = findSelector(selector, state.lastSnapshot);
+
+  try {
+    const elementCount = await page.locator(resolvedSelector).count();
+    
+    return {
+      success: true,
+      action: 'count',
+      target: resolvedSelector,
+      message: `Found ${elementCount} elements matching "${selector}"`,
+      count: elementCount,
+      durationMs: Date.now() - start
+    };
+  } catch (error) {
+    return {
+      success: false,
+      action: 'count',
+      target: resolvedSelector,
+      message: `Failed to count: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      count: 0,
+      durationMs: Date.now() - start
+    };
+  }
+}
+
 // Export session API
 export const session = {
   analyze,
@@ -756,7 +982,13 @@ export const session = {
   getValue,
   isVisible,
   screenshot,
-  getAttribute
+  getAttribute,
+  // New content extraction functions
+  goto,
+  waitForNavigation,
+  getText,
+  evaluate,
+  count
 };
 
 export default session;
