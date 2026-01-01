@@ -1,76 +1,61 @@
-# WebSight TODO
+# WebSight TODO List
 
-## Interaction System Status
+## High Priority
 
-### Test Results: 57/57 passing ✅ (100%)
+- [ ] Core screenshot functionality
+- [ ] Basic element selection
+- [ ] Simple interaction recording
+- [ ] Export to common formats (PNG, PDF)
 
-Last run: 2024-12-31
-- Average interaction time: ~32ms
-- Total test time: ~1.8s for 57 interactions
+## Medium Priority
 
-### Fixed ✅
+- [ ] Browser extension for easier access
+- [ ] Multi-browser support (Chrome, Firefox, Safari)
+- [ ] Annotation tools (arrows, text, highlights)
+- [ ] Cloud storage integration
+- [ ] Collaboration features (share screenshots with team)
 
-- [x] **Double-wrapped selectors bug** - `findSelector()` was wrapping `[data-testid="..."]` again
-- [x] **testId fallback** - Now tries `[data-testid="${target}"]` for simple alphanumeric targets
-- [x] **Select values** - Tests now use actual `value` attributes not display text
-- [x] **Modal close** - Tests click close button instead of Escape key
-- [x] **CDP smart targeting** - `tryConnectCDP(targetUrl)` finds correct tab or navigates
+## Low Priority
 
-### Available Actions
+- [ ] Advanced editing tools (blur, crop, resize)
+- [ ] Video recording capabilities
+- [ ] Integration with bug tracking systems
+- [ ] Mobile app version
+- [ ] Automated screenshot scheduling
+- [ ] OCR (Optical Character Recognition) for text extraction
+- [ ] GIF creation from multiple screenshots
 
-| Action | Description | Example |
-|--------|-------------|---------|
-| `click` | Click element | `click('btn-save')` |
-| `type` | Type into input | `type('field-name', 'John')` |
-| `select` | Select dropdown option | `select('field-country', 'ca')` |
-| `hover` | Hover over element | `hover('hover-card')` |
-| `press` | Press keyboard key | `press('Enter')` |
-| `scroll` | Scroll page | `scroll('down')` |
-| `waitFor` | Wait for element | `waitFor('modal-backdrop')` |
-| `getValue` | Get input/text value | `getValue('field-name')` |
-| `isVisible` | Check visibility | `isVisible('btn-save')` |
-| `getAttribute` | Get element attribute | `getAttribute('btn', 'type')` |
-| `screenshot` | Capture screenshot | `screenshot('out.png')` |
+## Testing & Validation Features
 
-### Known Limitations
+- [ ] Visual Regression Testing Suite - Automatically detect unintended visual changes across multiple pages/routes
+- [ ] Accessibility Analysis - Check color contrast ratios, ARIA labels, and WCAG compliance
+- [ ] Responsive Design Verification - Test and compare layouts across different viewport sizes (mobile, tablet, desktop)
 
-- Screenshot times out on CDP connections (Playwright limitation)
-- Action extraction capped at 60 elements
-- Overlays block interactions (expected behavior)
-- Select requires exact option value match
+## Advanced Interactions
 
-## Feature Backlog
+- [ ] Form Workflows - Record and replay complex form interactions with validation checks
+- [ ] Drag & Drop Support - Handle drag-and-drop UI elements (duplicated from Low Priority)
+- [ ] File Upload Simulation - Test file upload interfaces (duplicated from Low Priority)
+- [ ] Multi-page Flows - Track visual changes across navigation sequences (e.g., checkout flows)
 
-### High Priority - DONE ✅
+## Enhanced Visual Analysis
 
-- [x] `waitFor` action - wait for element to appear/disappear
-- [x] `getValue` action - read current value from input/select
-- [x] `isVisible` action - check if element is visible/enabled
-- [x] `screenshot` action - capture current state without full analysis
-- [x] `getAttribute` action - read element attributes
+- [ ] Component Detection - Identify and catalog reusable UI components (buttons, cards, modals)
+- [ ] Animation Capture - Record and analyze CSS/JS animations and transitions
+- [ ] Performance Metrics - Track layout shift (CLS), paint times, and rendering performance
+- [ ] Shadow DOM Support - Analyze components within shadow DOM boundaries
+- [ ] Design Mockup Comparison - Compare live sites against design mockups (Figma, Sketch, etc.)
 
-### Medium Priority
+## Developer Experience
 
-- [ ] Batch multiple interactions without re-analyzing
-- [ ] Element count/exists check
-- [ ] Form fill helper (fill multiple fields at once)
+- [ ] Visual Test Generator - Auto-generate Playwright/Cypress tests from recorded interactions
+- [ ] Design System Auditor - Verify consistency with design tokens and style guides
+- [ ] Change Changelog - Generate visual diffs with before/after comparisons for PRs
+- [ ] Watch Mode - Continuously monitor and report visual changes during development
 
-### Low Priority
+## AI-Specific Enhancements
 
-- [ ] Drag-and-drop support
-- [ ] File upload interactions
-- [ ] Interaction history/replay
-
-## CSS Framework Detection
-
-- [x] Tailwind CSS detection (classes, responsive, dark mode)
-- [x] Bootstrap detection
-- [x] Material UI detection
-- [x] Custom class extraction
-- [x] Inline style warnings
-
-## Test Page Improvements
-
-- [ ] Add more edge cases (disabled inputs, hidden elements)
-- [ ] Add drag-and-drop test elements
-- [ ] Add file upload test area
+- [ ] Natural Language Selectors - "Click the blue button in the top right" → auto-resolve to correct selector
+- [ ] Smart Wait Detection - Automatically detect loading states and wait for page stability
+- [ ] Error Recovery - Suggest alternative actions when elements aren't found
+- [ ] Multi-site Comparison - Compare similar pages across staging/production environments
