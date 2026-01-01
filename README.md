@@ -282,6 +282,30 @@ Edit `%APPDATA%/Cursor/User/globalStorage/cursor.mcp/mcp.json`:
 ```
 </details>
 
+<details>
+<summary><b>Claude Code</b></summary>
+
+**Option 1:** Create `.mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "websight": {
+      "command": "node",
+      "args": ["C:/path/to/websight/dist/src/mcp-server.js"]
+    }
+  }
+}
+```
+
+**Option 2:** Use the CLI command:
+
+```bash
+claude mcp add websight node C:/path/to/websight/dist/src/mcp-server.js
+```
+
+</details>
+
 ---
 
 ## 🛠️ Development
