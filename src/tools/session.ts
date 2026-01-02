@@ -141,14 +141,18 @@ async function getPage(url?: string): Promise<Page> {
     const headless = process.env.HEADED !== '1';
     state.browser = await chromium.launch({ 
       headless,
-      slowMo: headless ? 0 : 50  // Add slight delay in headed mode so you can see actions
+      slowMo: headless ? 0 : 50,  // Add slight delay in headed mode so you can see actions
+      args: ['--ignore-certificate-errors']  // Allow self-signed certs
     });
     state.isRemote = false;
   }
 
   // Create context if needed
   if (!state.context) {
-    state.context = await state.browser.newContext({ viewport });
+    state.context = await state.browser.newContext({ 
+      viewport,
+      ignoreHTTPSErrors: true  // Allow self-signed certs for localhost
+    });
   }
 
   // Create page if needed
